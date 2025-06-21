@@ -4,6 +4,9 @@ import mysql.connector
 from datetime import datetime
 import threading
 import logging
+from password import db_config
+
+
 
 # Configure logging
 logging.basicConfig(
@@ -25,6 +28,7 @@ class InventoryManagementSystem:
 
         # Initialize GUI
         self.setup_gui()
+        self.db_config = db_config
         self.connect_to_database()
         self.refresh_all_data()
 

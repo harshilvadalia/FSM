@@ -1,6 +1,25 @@
 const BoxModel = require('../models/box');
 
 class BoxController {
+  // Get boxes with empty compartments
+  static async getBoxesWithEmptyCompartments(req, res) {
+    try {
+      const boxes = await BoxModel.getBoxesWithEmptyCompartments();
+      res.status(200).json({
+        success: true,
+        count: boxes.length,
+        data: boxes
+      });
+    } catch (error) {
+      console.error('Error in getBoxesWithEmptyCompartments:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Server Error',
+        message: error.message
+      });
+    }
+  }
+
   // Get all boxes
   static async getAllBoxes(req, res) {
     try {

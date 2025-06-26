@@ -8,6 +8,7 @@ function OperationsTab() {
   const [activeOperation, setActiveOperation] = useState(null);
   const [items, setItems] = useState([]);
   const [boxes, setBoxes] = useState([]);
+  const [availableBoxes, setAvailableBoxes] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
   const [selectedBox, setSelectedBox] = useState('');
   const [subId, setSubId] = useState('');
@@ -41,6 +42,16 @@ function OperationsTab() {
       toast.error('Failed to load boxes');
     }
   };
+  
+  const fetchAvailableBoxes = async () => {
+    try {
+      const response = await BoxService.getBoxesWithEmptyCompartments();
+      setAvailableBoxes(response.data);
+    } catch (error) {
+      console.error('Error fetching available boxes:', error);
+      toast.error('Failed to load available boxes');
+    }
+  };
 
   const fetchAvailableItems = async () => {
     try {
@@ -54,6 +65,7 @@ function OperationsTab() {
   const showAddProductOptions = () => {
     setActiveOperation('add');
     setResult(null);
+    fetchAvailableBoxes(); // Fetch boxes with empty compartments when selecting add operation
   };
 
   const showRetrieveProductOptions = () => {
@@ -103,10 +115,15 @@ function OperationsTab() {
       });
       
       toast.success('Product added successfully');
-      setLoading(false);
       
       // Reset form fields
       setSubId('');
+      setSelectedBox('');
+      
+      // Refresh available boxes after adding a product
+      fetchAvailableBoxes();
+      
+      setLoading(false);
     } catch (error) {
       console.error('Error adding product:', error);
       setResult({
@@ -248,7 +265,7 @@ function OperationsTab() {
                 required
               >
                 <option value="">Select Box</option>
-                {boxes.map((box) => (
+                {availableBoxes.map((box) => (
                   <option key={box.box_id} value={box.box_id}>
                     {box.column_name}{box.row_number}
                   </option>

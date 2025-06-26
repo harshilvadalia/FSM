@@ -3,6 +3,9 @@ const BoxController = require('../controllers/boxController');
 
 const router = express.Router();
 
+// Get boxes with empty compartments
+router.get('/available', BoxController.getBoxesWithEmptyCompartments);
+
 // Get all boxes
 router.get('/', BoxController.getAllBoxes);
 

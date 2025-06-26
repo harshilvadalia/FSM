@@ -1,6 +1,25 @@
 const db = require('../config/db');
 
 class BoxModel {
+  static async getBoxesWithEmptyCompartments() {
+    try {
+      const [rows] = await db.query(`
+        SELECT DISTINCT b.*
+        FROM Boxes b
+        JOIN SubCompartments sc ON b.box_id = sc.box_id
+        WHERE sc.status = 'Empty'
+        UNION
+        SELECT b.*
+        FROM Boxes b
+        LEFT JOIN SubCompartments sc ON b.box_id = sc.box_id
+        WHERE sc.subcom_place IS NULL
+      `);
+      return rows;
+    } catch (error) {
+      throw new Error(`Error fetching boxes with empty compartments: ${error.message}`);
+    }
+  }
+
   static async getAllBoxes() {
     try {
       const [rows] = await db.query('SELECT * FROM Boxes');

@@ -12,6 +12,17 @@ const BoxService = {
     }
   },
 
+  // Get boxes with empty compartments
+  getBoxesWithEmptyCompartments: async () => {
+    try {
+      const response = await api.get('/boxes/available');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching available boxes:', error);
+      throw error;
+    }
+  },
+
   // Get box by ID
   getBoxById: async (id) => {
     try {

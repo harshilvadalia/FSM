@@ -4,8 +4,8 @@ require('dotenv').config();
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD  || 'qwertyuiop[]\\',
-  database: process.env.DB_NAME || 'inventory_management',
+  password: process.env.DB_PASSWORD || 'aryan@mysql1100',
+  database: process.env.DB_NAME || 'fsm',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

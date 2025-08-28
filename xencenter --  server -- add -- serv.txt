@@ -1,0 +1,1 @@
+xencenter -->  server --> add --> server: 10.10.8.60 , username : root , password : Smart@bvm_1234 --> critix -->thingworx(username: Administtator password:Smart@bvm_lab_thingworx ) -->console --> connect(KS APP) --> then select one folder and go to end until u get address
